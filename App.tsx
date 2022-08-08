@@ -17,10 +17,10 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Weather App" component={Home} />
-        <Stack.Screen name="Countries" component={Countries} />
-        <Stack.Screen name="Weather" component={Weather} />
+      <Stack.Navigator>
+        <Stack.Screen name="Weather App" options={{ title: 'Weather app' }} component={Home} />
+        <Stack.Screen name="Countries" options={{ title: 'Country' }} component={Countries} />
+        <Stack.Screen name="Weather" options={{ title: 'Capital Weather' }} component={Weather} />
       </Stack.Navigator>
     </NavigationContainer>
   );

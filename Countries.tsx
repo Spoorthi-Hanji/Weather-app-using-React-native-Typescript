@@ -6,6 +6,7 @@ import { Stack } from './App';
 
 
 
+
 const Countries: React.FunctionComponent<Stack>=(props)=>{
       
     const [countries, setCountries] = useState<any[]>([])
@@ -31,7 +32,7 @@ const Countries: React.FunctionComponent<Stack>=(props)=>{
             countries?.map((country)=>(
                 <View>
                   <Image
-        style={{width: 100, height: 100, marginLeft:40}}
+        style={{width: 100, height: 100, marginLeft:40,margin:10}}
         source={{
           uri: country.flags.png,
         }}
@@ -44,19 +45,24 @@ const Countries: React.FunctionComponent<Stack>=(props)=>{
                     
       </View>
       <View>
-      <Button title="Weather" onPress={()=>navigation.navigate('Weather', {capital:country.capital}) } color="#000"></Button>
+      <Button title="Capital weather" onPress={()=>navigation.navigate('Weather', {capital:country.capital}) } color="#000"></Button>
+
+      
 
       </View>
+      
                     
                 </View>
             ))
         )
       }
       
+      
 
       
 
     </View>
+    
     </ScrollView>
   )
 }
