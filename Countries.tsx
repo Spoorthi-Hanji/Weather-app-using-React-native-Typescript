@@ -1,10 +1,9 @@
 import React from 'react';
 import {useState,useEffect} from 'react'
-import {View,Text,Button,StyleSheet,Image,ScrollView} from 'react-native';
+import {View,Text,Button,StyleSheet,Image,ScrollView, ActivityIndicator} from 'react-native';
 import axios from 'axios';
 import { Stack } from './App';
-
-
+ 
 
 
 const Countries: React.FunctionComponent<Stack>=(props)=>{
@@ -13,6 +12,7 @@ const Countries: React.FunctionComponent<Stack>=(props)=>{
     const [loading,setLoading]=useState(true)
     const{navigation,route} = props;
     const{name} = route.params;
+    const[error,setError] = useState<any>(null)
     
     
     const getInformation = async ()=>{
@@ -24,26 +24,55 @@ const Countries: React.FunctionComponent<Stack>=(props)=>{
     useEffect(()=>{ 
         getInformation()
     },[])
+
+
   return (
     <ScrollView>
+      
     <View style={styles.container} >
+      {error && <Text>{error}</Text>}
+      
       {
-        loading ? <Text>Loading.....</Text> : (
+        loading ? <ActivityIndicator size="small" color="#0000ff" /> : (
             countries?.map((country)=>(
                 <View>
-                  <Image
-        style={{width: 100, height: 100, marginLeft:40,margin:10}}
-        source={{
-          uri: country.flags.png,
-        }}
-      />
-                    <Text style={styles.content}>Capital: {country.capital} </Text>
-                    <Text  style={styles.content}>Population: {country.population}</Text>
-                    <Text style={styles.content} >Latitude and Longitude: {country.latlng}</Text> 
-                    <View style={{justifyContent: 'center', alignItems: "center", marginBottom: 10}}>
+                    <Text style={styles.content}>
+                      Country Flag: 
+                    <View style={styles.image}>
+                    <Image
+                     style={{width: 50, height: 25}}
+                     source={{
+                     uri: country.flags.png,
+                     }}
+                    />
 
+                    </View>
+
+                    </Text>
+                    <View
+                     style={{
+                     borderBottomColor: '#D3D3D3',
+                     borderBottomWidth: 1,
+                    }}
+                    />
+                  
+                    <Text style={styles.content}>Capital: {country.capital} </Text>
+                    <View
+                     style={{
+                     borderBottomColor: '#D3D3D3',
+                     borderBottomWidth: 1,
+                    }}
+                    />
+                    <Text  style={styles.content}>Population: {country.population}</Text>
+                    <View
+                      style={{
+                      borderBottomColor: '#D3D3D3',
+                      borderBottomWidth: 1,
+                      }}
+                    />
+                    <Text style={styles.content} >Latitude and Longitude: {country.latlng}</Text> 
                     
-      </View>
+                    
       <View>
       <Button title="Capital weather" onPress={()=>navigation.navigate('Weather', {capital:country.capital}) } color="#000"></Button>
 
@@ -56,6 +85,9 @@ const Countries: React.FunctionComponent<Stack>=(props)=>{
             ))
         )
       }
+
+      
+
       
       
 
@@ -69,13 +101,12 @@ const Countries: React.FunctionComponent<Stack>=(props)=>{
 
 const styles = StyleSheet.create({
     container: {
-      
+      display: 'flex',
+      flexDirection:'column',
       padding: 30,
-      marginTop: 100,
+      marginTop: 40,
       borderRadius: 30,
-      backgroundColor: "#D3D3D3",
-      width: 250, //card width
-      marginLeft:70, //centers the card
+      justifyContent: 'center'
     },
     content:{
       marginTop: 20,
@@ -83,8 +114,15 @@ const styles = StyleSheet.create({
       fontWeight: '900'
     },
     text:{
-      margin: 10,
+      margin: 10
+    },
+    flagtext:{
+      fontWeight: '900'
+    },
+    image:{
+      paddingLeft: 20,
       
     }
+    
   });
  export default Countries

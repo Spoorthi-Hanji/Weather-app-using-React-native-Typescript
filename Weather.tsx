@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View,Text,StyleSheet,Image} from 'react-native';
+import {View,Text,StyleSheet,Image, ActivityIndicator} from 'react-native';
 import {useState,useEffect} from 'react'
 import axios from 'axios';
 import { Stack } from './App';
@@ -27,35 +27,49 @@ const Weather: React.FunctionComponent<Stack>=(props)=>{
   return (
     <View style={styles.weather} >
     {
-      loaded ? <Text>Loading.....</Text> : (
+      loaded ? <ActivityIndicator size="small" color="#0000ff" /> : (
          
               <View>
-                  <Text  style={styles.content}>Temperature: {weatherData.current.temperature} </Text>
-                  <Text  style={styles.content}>Precipitation: {weatherData.current.precip}</Text>
-                  <Text  style={styles.content} >Wind Speed: {weatherData.current.wind_speed}</Text> 
-                  <View style={{justifyContent: 'center', alignItems: "center", marginBottom: 10}}>
-
+                  <Text style={styles.content}>
+                    Weather Icon: 
+                    <View style={styles.image}>
                   <Image
-      style={{width: 100, height: 100}}
-      source={{
-        uri: weatherData.current.weather_icons[0],
-      }}
-    />
-    </View>
-    <View>
-    
+                   style={{width: 50, height: 50}}
+                   source={{
+                   uri: weatherData.current.weather_icons[0],
+                   }}
+                 />
 
-    </View>
+                  </View>
+                  </Text>
+                  <View
+                   style={{
+                   borderBottomColor: '#D3D3D3',
+                   borderBottomWidth: 1,
+                   }}
+                  />
+                 
+                 
+                  <Text  style={styles.content}>Temperature: {weatherData.current.temperature} </Text>
+                  <View
+                   style={{
+                   borderBottomColor: '#D3D3D3',
+                   borderBottomWidth: 1,
+                   }}
+                  />
+                  <Text  style={styles.content}>Precipitation: {weatherData.current.precip}</Text>
+                  <View
+                   style={{
+                   borderBottomColor: '#D3D3D3',
+                   borderBottomWidth: 1,
+                   }}
+                  />
+                  <Text  style={styles.content} >Wind Speed: {weatherData.current.wind_speed}</Text> 
                   
               </View>
           
       )
     }
-   
-    
-
-    
-
   </View>
   )
 }
@@ -65,15 +79,16 @@ const styles = StyleSheet.create({
       padding: 30,
       marginTop: 100,
       borderRadius: 30,
-      backgroundColor: "#D3D3D3",
-      width: 250, //card width
-      marginLeft:70, //centers the card
     },
     content: {
-      fontSize:20,
-      fontWeight: '900',
-      padding:10
+      marginTop: 20,
+      margin: 10,
+      fontWeight: '900'
+    },
+    image:{
+      paddingLeft: 20
     }
+   
   });
 
   export default Weather

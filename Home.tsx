@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {View,TextInput,StyleSheet,Button,ImageBackground } from 'react-native';
+import {View,TextInput,StyleSheet,Button,ImageBackground,Text,TouchableOpacity } from 'react-native';
 import {useState} from 'react'
 import cloud from './images/cloud.jpg'
 import { Stack } from './App';
-import { HelperText } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
+
 
 const countryList = [
 	"Afghanistan",
@@ -124,6 +125,7 @@ const countryList = [
 	"Fiji",
 	"fiji",
 	"Finland",
+	"finland",
 	"France",
 	"france",
 	"French Guiana",
@@ -150,39 +152,52 @@ const countryList = [
 	"Holy See (the)",
 	"Honduras",
 	"Hong Kong",
+	"hong kong",
 	"Hungary",
 	"Iceland",
+	"iceland",
 	"India",
 	"india",
 	"Indonesia",
-	"Iran (Islamic Republic of)",
+	"indonesia",
+	"Iran",
+	"iran",
 	"Iraq",
+	"iraq",
 	"Ireland",
+	"ireland",
 	"Isle of Man",
 	"Israel",
 	"Italy",
+	"italy",
 	"Jamaica",
 	"Japan",
+	"japan",
 	"Jersey",
+	"jersey",
 	"Jordan",
 	"Kazakhstan",
 	"Kenya",
+	"kenya",
 	"Kiribati",
-	"Korea (the Democratic People's Republic of)",
-	"Korea (the Republic of)",
+	"Korea",
+	"korea",
 	"Kuwait",
 	"Kyrgyzstan",
 	"Lao People's Democratic Republic (the)",
 	"Latvia",
 	"Lebanon",
+	"lebanon",
 	"Lesotho",
 	"Liberia",
 	"Libya",
+	"libya",
 	"Liechtenstein",
 	"Lithuania",
 	"Luxembourg",
 	"Macao",
 	"Madagascar",
+	"madagascar",
 	"Malawi",
 	"Malaysia",
 	"Maldives",
@@ -192,44 +207,60 @@ const countryList = [
 	"Martinique",
 	"Mauritania",
 	"Mauritius",
+	"mauritius",
 	"Mayotte",
 	"Mexico",
+	"mexico",
 	"Micronesia (Federated States of)",
 	"Moldova (the Republic of)",
 	"Monaco",
+	"monaco",
 	"Mongolia",
 	"Montenegro",
 	"Montserrat",
 	"Morocco",
+	"morocco",
 	"Mozambique",
 	"Myanmar",
+	"myanmar",
 	"Namibia",
 	"Nauru",
 	"Nepal",
+	"nepal",
 	"Netherlands (the)",
 	"New Caledonia",
 	"New Zealand",
+	"new zealand",
 	"Nicaragua",
 	"Niger (the)",
 	"Nigeria",
+	"nigeria",
 	"Niue",
 	"Norfolk Island",
 	"Northern Mariana Islands (the)",
 	"Norway",
 	"Oman",
+	"oman",
 	"Pakistan",
+	"pakistan",
 	"Palau",
+	"palau",
 	"Palestine, State of",
 	"Panama",
+	"panama",
 	"Papua New Guinea",
 	"Paraguay",
+	"paraguay",
 	"Peru",
+	"peru",
 	"Philippines (the)",
 	"Pitcairn",
 	"Poland",
+	"poland",
 	"Portugal",
 	"Puerto Rico",
 	"Qatar",
+	"qatar",
 	"Republic of North Macedonia",
 	"Romania",
 	"Russian Federation (the)",
@@ -251,21 +282,26 @@ const countryList = [
 	"Seychelles",
 	"Sierra Leone",
 	"Singapore",
+	"singapore",
 	"Sint Maarten (Dutch part)",
 	"Slovakia",
 	"Slovenia",
 	"Solomon Islands",
 	"Somalia",
+	"somalia",
 	"South Africa",
+	"south africa",
 	"South Georgia and the South Sandwich Islands",
 	"South Sudan",
 	"Spain",
 	"Sri Lanka",
 	"Sudan (the)",
+	"sudan",
 	"Suriname",
 	"Svalbard and Jan Mayen",
 	"Sweden",
 	"Switzerland",
+	"switzerland",
 	"Syrian Arab Republic",
 	"Taiwan",
 	"Tajikistan",
@@ -303,54 +339,64 @@ const countryList = [
 ];
 
 
+
 const Home: React.FunctionComponent<Stack>=(props)=>{
     const{navigation} = props;
     const [name, setName] = useState('');
-    const [errorNum, setErrorNum] = useState<any>(null);
-
+	
+   
     const checkData = ()=> countryList.some(country=>{
       if(country === name){
-        navigation.navigate('Countries',{name})
+        navigation.navigate('Countries',{name});
+		Toast.hide()
       }else{
-		setErrorNum('Enter correct Country name');
+		Toast.show({
+			type:'error',
+			text1: 'Enter correct country name',
+			visibilityTime:1000,
+			
+		})
+		setName('')
 		
 	  }
     })
+
+	
   return (
     <View >
-       <ImageBackground source = {cloud} style={styles.img}>
-       <TextInput
+       
+
+        <View>
+			
+		<TextInput
           placeholder="Enter country name"
           onChangeText={
             (value) => setName(value)
           }
-          
+		  value={name}
           style={styles.textInputStyle}
+		  selectionColor='#0000FF'
         />
-{errorNum != null && (
-        <View>
-          <HelperText type="error" visible={true}>
-            {errorNum}
-          </HelperText>
-        </View>
-      )}
 
+		</View>
+       
+		
         <View style={styles.button}>
           <Button 
             title="Submit"
             color="#606070" 
             disabled={!name}
             onPress={checkData}
-
-
           />
-          
+		  
         </View>
-        
-        
-       
 
-       </ImageBackground>
+		
+		
+
+		
+		<Toast/>
+       
         
         
 
@@ -363,23 +409,24 @@ const styles = StyleSheet.create({
       padding: 35,
     },
     textInputStyle: {
-      width: '50%',
-      height: 40,
-      marginLeft:100,
-      borderWidth: 2,
-      marginTop: 200,
-      borderRadius: 20,
-      alignItems: 'center'
+	height: 40,
+	paddingLeft: 6,
+	borderBottomWidth: 1,
+	marginTop: 200,
+	borderBottomColor:'#0000FF',
+	marginLeft: 50,
+	marginRight:50
     },
     button:{
        alignItems: 'center',
        marginTop: 15,
-      
-       
     },
     img:{
       height: 700
-    }
+    },
+	errorMsg:{
+		fontSize:30
+	}
   });
 
   export default Home
