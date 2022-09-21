@@ -2,15 +2,14 @@ import React from 'react';
 import {useState,useEffect} from 'react'
 import {View,Text,Button,StyleSheet,Image,ScrollView, ActivityIndicator} from 'react-native';
 import axios from 'axios';
-import { Stack } from './App';
+
  
 
 
-const Countries: React.FunctionComponent<Stack>=(props)=>{
+const Countries = ({ navigation, route }: any) =>{
       
     const [countries, setCountries] = useState<any[]>([])
     const [loading,setLoading]=useState(true)
-    const{navigation,route} = props;
     const{name} = route.params;
     const[error,setError] = useState<any>(null)
     
@@ -19,6 +18,7 @@ const Countries: React.FunctionComponent<Stack>=(props)=>{
       const result = await axios.get(`https://restcountries.com/v2/name/${name}`)
       setCountries(result.data)
       setLoading(false)
+      
     }
     
     useEffect(()=>{ 
@@ -74,7 +74,11 @@ const Countries: React.FunctionComponent<Stack>=(props)=>{
                     
                     
       <View>
-      <Button title="Capital weather" onPress={()=>navigation.navigate('Weather', {capital:country.capital}) } color="#000"></Button>
+      <Button title="Capital weather" 
+      onPress={()=>navigation.navigate('Weather', {capital:country.capital}) } 
+      color="#000"
+      testID="cap_weather"
+      ></Button>
 
       
 

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {View,TextInput,StyleSheet,Button,ImageBackground,Text,TouchableOpacity } from 'react-native';
+import {View,TextInput,StyleSheet,Button,LogBox, Alert } from 'react-native';
 import {useState} from 'react'
-import cloud from './images/cloud.jpg'
 import { Stack } from './App';
 import Toast from 'react-native-toast-message';
 
-
+LogBox.ignoreAllLogs();
 const countryList = [
 	"Afghanistan",
 	"afghanistan",
@@ -346,9 +345,9 @@ const Home: React.FunctionComponent<Stack>=(props)=>{
 	
    
     const checkData = ()=> countryList.some(country=>{
-      if(country === name){
+      if(country == name){
         navigation.navigate('Countries',{name});
-		Toast.hide()
+		// Toast.hide()
       }else{
 		Toast.show({
 			type:'error',
@@ -356,6 +355,8 @@ const Home: React.FunctionComponent<Stack>=(props)=>{
 			visibilityTime:1000,
 			
 		})
+
+		
 		setName('')
 		
 	  }
@@ -376,6 +377,7 @@ const Home: React.FunctionComponent<Stack>=(props)=>{
 		  value={name}
           style={styles.textInputStyle}
 		  selectionColor='#0000FF'
+		  testID='country-name'
         />
 
 		</View>
@@ -387,13 +389,10 @@ const Home: React.FunctionComponent<Stack>=(props)=>{
             color="#606070" 
             disabled={!name}
             onPress={checkData}
+			testID="submit_btn"
           />
 		  
         </View>
-
-		
-		
-
 		
 		<Toast/>
        
@@ -429,4 +428,4 @@ const styles = StyleSheet.create({
 	}
   });
 
-  export default Home
+  export default Home;

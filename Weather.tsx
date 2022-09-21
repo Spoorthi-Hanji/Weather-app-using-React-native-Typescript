@@ -3,15 +3,13 @@ import React from 'react';
 import {View,Text,StyleSheet,Image, ActivityIndicator} from 'react-native';
 import {useState,useEffect} from 'react'
 import axios from 'axios';
-import { Stack } from './App';
 
 
 
-
-const Weather: React.FunctionComponent<Stack>=(props)=>{
+const Weather = ({route }: any) =>{
   const [weatherData,setWeatherData] = useState<any>(null);
   const [loaded, setLoaded] = useState(true)
-  const {route} = props;
+ 
   const {capital} = route?.params;
 
   const fetchWeatherData = async  ()=>{
